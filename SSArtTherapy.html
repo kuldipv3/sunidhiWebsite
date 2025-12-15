@@ -2,87 +2,107 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sunidhi Sinha – Art Therapy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SS Art Therapy</title>
+
   <style>
     * { box-sizing: border-box; }
 
-   body {
-  margin: 0;
-  min-height: 100vh;
-  background-image: url("assets/SSArtTherapyBG.png");
-  background-size: cover;
-  background-position: center;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      padding: 100px 60px;
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-image: url("assets/SSArtTherapyBG.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    .name {
-      font-size: clamp(24px, 3vw, 40px);
-      letter-spacing: 0.08em;
-      margin-bottom: 24px;
+    /* Subtle tonal veil for readability (very important) */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.18);
+      z-index: 0;
+    }
+
+    /* Content wrapper */
+    .content {
+      position: relative;
+      z-index: 1;
+      text-align: left;
+      max-width: 900px;
+      padding: 80px 60px;
+      color: rgba(255, 255, 255, 0.35);
+      filter: blur(2px);
+      transition:
+        color 1.4s ease,
+        filter 1.4s ease;
+    }
+
+    /* Resolve clarity */
+    body.loaded .content {
+      color: rgba(255, 255, 255, 0.95);
+      filter: blur(0);
     }
 
     h1 {
-      margin: 0;
-      font-size: clamp(56px, 7vw, 104px);
+      margin: 0 0 32px 0;
+      font-size: clamp(48px, 6vw, 88px);
       font-weight: 500;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
     }
 
-    a.back {
+    p {
+      margin: 0;
+      font-size: clamp(18px, 2.5vw, 32px);
+      letter-spacing: 0.05em;
+      max-width: 720px;
+    }
+
+    /* Optional back link (kept extremely subtle) */
+    .back {
       display: inline-block;
       margin-top: 80px;
-      font-size: 14px;
+      font-size: 12px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: inherit;
+      color: rgba(255,255,255,0.5);
       text-decoration: none;
+      transition: opacity 0.3s ease;
     }
 
-    a.back:hover {
-      text-decoration: underline;
+    .back:hover {
+      opacity: 0.8;
     }
-
-    .inner-content {
-  color: rgba(255,255,255,0.35);
-  filter: blur(2px);
-  transition: color 1.2s ease, filter 1.2s ease;
-}
-
-/* Resolve clarity after load */
-body.loaded .inner-content {
-  color: rgba(255,255,255,0.95);
-  filter: blur(0);
-}
-    
-
   </style>
 </head>
-<body>
-  <div class="container">
-    <div class="name">sunidhi sinha</div>
-    <h1>Art Therapy</h1>
 
-    <a class="back" href="index.html">← Back to Home</a>
+<body>
+
+  <div class="content">
+    <h1>Art Therapy</h1>
+    <p>
+      A space for experiential learning, reflection, and inner exploration.
+      This practice invites presence, attention, and gentle inquiry through
+      visual language.
+    </p>
+
+    <a href="index.html" class="back">← back</a>
   </div>
 
   <script>
-  window.addEventListener("load", () => {
-    document.body.classList.add("loaded");
-  });
-</script>
-  
+    // Resolve readability once page is fully ready
+    window.addEventListener("load", () => {
+      document.body.classList.add("loaded");
+    });
+  </script>
+
 </body>
-
 </html>
-
