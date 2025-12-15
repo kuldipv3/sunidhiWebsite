@@ -67,6 +67,28 @@ a.link {
   opacity: 0.12;
 }
 
+.transition-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: url("assets/landingArtTherapy.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1);
+  pointer-events: none;
+  z-index: 10;
+  transition:
+    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.4s ease;
+}
+
+/* Active zoom state */
+.transition-overlay.active {
+  opacity: 1;
+  transform:
+    scale(3)
+    translate(-20%, -10%);
+}
 
     
   </style>
@@ -84,9 +106,32 @@ a.link {
 </div>
 
   <div class="bg-hover"></div>
+  <div class="transition-overlay"></div>
+
+<script>
+  const artLink = document.querySelector(".art-therapy-link");
+  const overlay = document.querySelector(".transition-overlay");
+
+  artLink.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    // Show overlay
+    overlay.classList.add("active");
+
+    // Fade out text
+    document.querySelector(".container").style.opacity = 0;
+
+    // Navigate after animation
+    setTimeout(() => {
+      window.location.href = "SSArtTherapy.html";
+    }, 1200);
+  });
+</script>
+
   
 </body>
 </html>
+
 
 
 
