@@ -49,12 +49,19 @@
   background-size: cover;
   background-position: center;
 
-  opacity: 1;          /* ALWAYS visible */
-  filter: blur(6px);   /* starts pixelated */
+  opacity: 0;              /* hidden on home */
+  filter: blur(6px);       /* prepared for transition */
 
-  transition: filter 2.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition: filter 2.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+              opacity 0.2s ease;
+
   z-index: 1;
   pointer-events: none;
+}
+
+/* Only visible DURING transition */
+body.transitioning .bg-inner {
+  opacity: 1;
 }
 
 .bg-inner.active {
@@ -93,14 +100,20 @@
     /* =========================
        FOREGROUND CONTENT
        ========================= */
-    .container {
+   .container {
   position: relative;
   z-index: 3;
   padding: 80px 60px;
 
-  filter: blur(4px);
+  filter: blur(0);          /* clean on home */
   transition: filter 2.6s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
+
+/* Blur text ONLY during transition */
+body.transitioning .container {
+  filter: blur(4px);
+}
+
 
 .container.active {
   filter: blur(0);
@@ -166,6 +179,7 @@
     /* Click transition */
     link.addEventListener("click", (e) => {
   e.preventDefault();
+      document.body.classList.add("transitioning");
 
   hoverBg.classList.remove("visible");
 
@@ -186,6 +200,7 @@
 
 </body>
 </html>
+
 
 
 
