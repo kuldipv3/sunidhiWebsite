@@ -43,21 +43,24 @@
        INNER WORLD (lady image)
        ========================= */
     .bg-inner {
-      position: fixed;
-      inset: 0;
-      background-image: url("assets/SSArtTherapyBG.png");
-      background-size: cover;
-      background-position: center;
-      opacity: 1;
-      filter: blur(6px); 
-      transition: filter 2.6s cubic-bezier(0.22, 0.61, 0.36, 1);
-      z-index: 1;
-      pointer-events: none;
-    }
+  position: fixed;
+  inset: 0;
+  background-image: url("assets/SSArtTherapyBG.png");
+  background-size: cover;
+  background-position: center;
 
-    .bg-inner.active {
-  filter: blur(0px);
+  opacity: 1;          /* ALWAYS visible */
+  filter: blur(6px);   /* starts pixelated */
+
+  transition: filter 2.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  z-index: 1;
+  pointer-events: none;
 }
+
+.bg-inner.active {
+  filter: blur(0);
+}
+
 
     /* =========================
        ZOOM SOURCE (landing img)
@@ -91,16 +94,16 @@
        FOREGROUND CONTENT
        ========================= */
     .container {
-      filter: blur(4px);
-      position: relative;
-      z-index: 3;
-      padding: 80px 60px;
-      transition: filter 2.6s cubic-bezier(0.22, 0.61, 0.36, 1),
-              opacity 0.6s ease;
-    }
+  position: relative;
+  z-index: 3;
+  padding: 80px 60px;
 
-    .container.active {
-  filter: blur(0px);
+  filter: blur(4px);
+  transition: filter 2.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.container.active {
+  filter: blur(0);
 }
 
     h1 {
@@ -162,26 +165,28 @@
 
     /* Click transition */
     link.addEventListener("click", (e) => {
-      e.preventDefault();
+  e.preventDefault();
 
-      hoverBg.classList.remove("visible");
-      content.style.opacity = 0;
+  hoverBg.classList.remove("visible");
 
-      /* start zoom immediately */
-      zoom.classList.add("active");
-      innerBg.style.opacity = 1;
-      innerBg.classList.add("active");
-      container.classList.add("active");
+  // Start zoom + rotation
+  zoom.classList.add("active");
 
-      /* navigate after motion settles */
-      setTimeout(() => {
-        window.location.href = "SSArtTherapy.html";
-      }, 2600);
-    });
+  // Resolve clarity immediately (no delay)
+  innerBg.classList.add("active");
+  container.classList.add("active");
+
+  // Navigate after motion completes
+  setTimeout(() => {
+    window.location.href = "SSArtTherapy.html";
+  }, 2600);
+});
+
   </script>
 
 </body>
 </html>
+
 
 
 
