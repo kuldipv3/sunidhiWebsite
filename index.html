@@ -11,8 +11,8 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: white;
       color: #2b2b2b;
       display: flex;
       align-items: center;
@@ -20,77 +20,48 @@
       overflow: hidden;
     }
 
-    /* =========================
-       SURFACE BACKGROUND (index)
-       ========================= */
-    .bg-surface {
+    /* ZOOM IMAGE (landing image only) */
+    .zoom-layer {
       position: fixed;
       inset: 0;
       background-image: url("assets/landingArtTherapy.jpg");
       background-size: cover;
       background-position: center;
+      transform: scale(1);
       opacity: 0;
-      transition: opacity 0.6s ease;
+      transition:
+        opacity 0.4s ease,
+        transform 1.4s cubic-bezier(0.16,1,0.3,1);
       z-index: 0;
       pointer-events: none;
     }
 
-    /* Hover reveals surface world */
-    body:has(.art-therapy-link:hover) .bg-surface {
-      opacity: 0.12;
+    .zoom-layer.active {
+      opacity: 1;
+      transform: scale(3) translate(10%, 18%);
     }
 
-    /* =========================
-       INNER WORLD (SSArtTherapy)
-       ========================= */
-    .inner-world {
+    /* TEAL FILL (pure color) */
+    .teal-fill {
       position: fixed;
       inset: 0;
-      background-image: url("assets/SSArtTherapyBG.png");
-      background-size: cover;
-      background-position: center;
+      background: #2f8f9d;
       opacity: 0;
-      transform: scale(1.15);
-      transition:
-        opacity 0.8s ease,
-        transform 1.4s cubic-bezier(0.16,1,0.3,1);
+      transition: opacity 0.6s ease;
       z-index: 1;
       pointer-events: none;
     }
 
-    .inner-world.active {
+    .teal-fill.active {
       opacity: 1;
-      transform: scale(1);
     }
 
-    /* Inner content: already there, becomes readable */
-    .inner-content {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      color: rgba(255,255,255,0.35);
-      filter: blur(2px);
-      transition:
-        color 1.2s ease,
-        filter 1.2s ease;
-    }
-
-    .inner-world.active .inner-content {
-      color: rgba(255,255,255,0.95);
-      filter: blur(0);
-    }
-
-    /* =========================
-       FOREGROUND CONTENT
-       ========================= */
+    /* CONTENT */
     .container {
       position: relative;
       z-index: 3;
-      text-align: left;
       padding: 80px 60px;
-      transition: opacity 0.6s ease;
+      transition: opacity 0.5s ease;
     }
 
     h1 {
@@ -117,18 +88,9 @@
 
 <body>
 
-  <!-- Surface world -->
-  <div class="bg-surface"></div>
+  <div class="zoom-layer"></div>
+  <div class="teal-fill"></div>
 
-  <!-- Inner world (hidden depth) -->
-  <div class="inner-world">
-    <div class="inner-content">
-      <h1>Art Therapy</h1>
-      <p>SSArtTherapy</p>
-    </div>
-  </div>
-
-  <!-- Foreground -->
   <div class="container">
     <h1>
       <a href="SSArtTherapy.html" class="art-therapy-link">ART THERAPY</a>
@@ -136,27 +98,27 @@
     <p>experiential learning</p>
   </div>
 
-  <!-- =========================
-       CLICK TRANSITION LOGIC
-       ========================= -->
   <script>
     const link = document.querySelector(".art-therapy-link");
-    const innerWorld = document.querySelector(".inner-world");
-    const container = document.querySelector(".container");
+    const zoom = document.querySelector(".zoom-layer");
+    const teal = document.querySelector(".teal-fill");
+    const content = document.querySelector(".container");
 
     link.addEventListener("click", (e) => {
       e.preventDefault();
 
-      // fade surface content
-      container.style.opacity = 0;
+      content.style.opacity = 0;
+      zoom.classList.add("active");
 
-      // reveal inner world
-      innerWorld.classList.add("active");
+      // After zoom reaches teal
+      setTimeout(() => {
+        teal.classList.add("active");
+      }, 700);
 
-      // navigate once illusion is complete
+      // Navigate after teal fills screen
       setTimeout(() => {
         window.location.href = "SSArtTherapy.html";
-      }, 1600);
+      }, 1400);
     });
   </script>
 
