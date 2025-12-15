@@ -12,7 +12,7 @@
       margin: 0;
       min-height: 100vh;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: white;
+      background: #ffffff;
       color: #2b2b2b;
       display: flex;
       align-items: center;
@@ -20,9 +20,9 @@
       overflow: hidden;
     }
 
-    /* =====================
-       HOVER BACKGROUND
-       ===================== */
+    /* =========================
+       HOVER PREVIEW BACKGROUND
+       ========================= */
     .bg-hover {
       position: fixed;
       inset: 0;
@@ -39,9 +39,24 @@
       opacity: 0.12;
     }
 
-    /* =====================
-       ZOOM LAYER
-       ===================== */
+    /* =========================
+       INNER WORLD (lady image)
+       ========================= */
+    .bg-inner {
+      position: fixed;
+      inset: 0;
+      background-image: url("assets/SSArtTherapyBG.png");
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 2.2s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* =========================
+       ZOOM SOURCE (landing img)
+       ========================= */
     .zoom-layer {
       position: fixed;
       inset: 0;
@@ -51,27 +66,25 @@
       opacity: 0;
       transform: scale(1);
       transition:
-        opacity 0.3s ease,
+        opacity 0.4s ease,
         transform 2.6s cubic-bezier(0.22, 0.61, 0.36, 1);
-      z-index: 1;
+      z-index: 2;
       pointer-events: none;
     }
 
     .zoom-layer.active {
       opacity: 1;
-      transform: scale(19) translate(10%, 18%);
+      transform: scale(5) translate(10%, 18%);
     }
 
-    
-
-    /* =====================
-       CONTENT
-       ===================== */
+    /* =========================
+       FOREGROUND CONTENT
+       ========================= */
     .container {
       position: relative;
       z-index: 3;
       padding: 80px 60px;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.6s ease;
     }
 
     h1 {
@@ -98,10 +111,16 @@
 
 <body>
 
+  <!-- Hover preview -->
   <div class="bg-hover"></div>
-  <div class="zoom-layer"></div>
-  
 
+  <!-- Inner world (lady image) -->
+  <div class="bg-inner"></div>
+
+  <!-- Zooming layer -->
+  <div class="zoom-layer"></div>
+
+  <!-- Content -->
   <div class="container">
     <h1>
       <a href="SSArtTherapy.html" class="art-therapy-link">ART THERAPY</a>
@@ -113,10 +132,10 @@
     const link = document.querySelector(".art-therapy-link");
     const hoverBg = document.querySelector(".bg-hover");
     const zoom = document.querySelector(".zoom-layer");
-    
+    const innerBg = document.querySelector(".bg-inner");
     const content = document.querySelector(".container");
 
-    // HOVER PREVIEW (JS, reliable)
+    /* Hover preview (robust, JS-based) */
     link.addEventListener("mouseenter", () => {
       hoverBg.classList.add("visible");
     });
@@ -125,29 +144,30 @@
       hoverBg.classList.remove("visible");
     });
 
-    // CLICK TRANSITION
+    /* Click transition */
     link.addEventListener("click", (e) => {
       e.preventDefault();
 
+      // Remove hover state
       hoverBg.classList.remove("visible");
+
+      // Fade out text
       content.style.opacity = 0;
+
+      // Start zoom immediately
       zoom.classList.add("active");
 
+      // Fade in inner world DURING zoom
       setTimeout(() => {
-        teal.classList.add("active");
-      }, 1000);
+        innerBg.style.opacity = 1;
+      }, 600);
 
+      // Navigate after motion fully settles
       setTimeout(() => {
         window.location.href = "SSArtTherapy.html";
-      }, 1400);
+      }, 2600);
     });
   </script>
 
 </body>
 </html>
-
-
-
-
-
-
