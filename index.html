@@ -58,13 +58,29 @@
        ZOOM SOURCE (landing img)
        ========================= */
     .zoom-layer {
-  transform-origin: 60% 65%;
-}
+      position: fixed;
+      inset: 0;
+      background-image: url("assets/landingArtTherapy.jpg");
+      background-size: cover;
+      background-position: center;
 
-.zoom-layer.active {
-  opacity: 1;
-  transform: scale(18);
-}
+      /* 🔑 anchor zoom on teal square */
+      transform-origin: 60% 65%;
+
+      opacity: 0;
+      transform: scale(1);
+      transition:
+        opacity 0.4s ease,
+        transform 2.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .zoom-layer.active {
+      opacity: 1;
+      transform: scale(5);
+    }
+
     /* =========================
        FOREGROUND CONTENT
        ========================= */
@@ -102,7 +118,7 @@
   <!-- Hover preview -->
   <div class="bg-hover"></div>
 
-  <!-- Inner world (lady image) -->
+  <!-- Inner world -->
   <div class="bg-inner"></div>
 
   <!-- Zooming layer -->
@@ -123,7 +139,7 @@
     const innerBg = document.querySelector(".bg-inner");
     const content = document.querySelector(".container");
 
-    /* Hover preview (robust, JS-based) */
+    /* Hover preview */
     link.addEventListener("mouseenter", () => {
       hoverBg.classList.add("visible");
     });
@@ -136,21 +152,18 @@
     link.addEventListener("click", (e) => {
       e.preventDefault();
 
-      // Remove hover state
       hoverBg.classList.remove("visible");
-
-      // Fade out text
       content.style.opacity = 0;
 
-      // Start zoom immediately
+      /* start zoom immediately */
       zoom.classList.add("active");
 
-      // Fade in inner world DURING zoom
+      /* blend in inner world DURING zoom */
       setTimeout(() => {
         innerBg.style.opacity = 1;
       }, 600);
 
-      // Navigate after motion fully settles
+      /* navigate after motion settles */
       setTimeout(() => {
         window.location.href = "SSArtTherapy.html";
       }, 2600);
@@ -159,4 +172,3 @@
 
 </body>
 </html>
-
