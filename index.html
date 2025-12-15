@@ -62,22 +62,7 @@
       transform: scale(19) translate(10%, 18%);
     }
 
-    /* =====================
-       TEAL TRANSITION
-       ===================== */
-    .teal-fill {
-      position: fixed;
-      inset: 0;
-      background: #2f8f9d;
-      opacity: 0;
-      transition: opacity 0.6s ease;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .teal-fill.active {
-      opacity: 1;
-    }
+    
 
     /* =====================
        CONTENT
@@ -115,7 +100,7 @@
 
   <div class="bg-hover"></div>
   <div class="zoom-layer"></div>
-  <div class="teal-fill"></div>
+  
 
   <div class="container">
     <h1>
@@ -128,7 +113,7 @@
     const link = document.querySelector(".art-therapy-link");
     const hoverBg = document.querySelector(".bg-hover");
     const zoom = document.querySelector(".zoom-layer");
-    const teal = document.querySelector(".teal-fill");
+    
     const content = document.querySelector(".container");
 
     // HOVER PREVIEW (JS, reliable)
@@ -160,6 +145,7 @@
 
 </body>
 </html>
+
 
 
 
