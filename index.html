@@ -124,26 +124,74 @@ a.link {
 <script>
   const artLink = document.querySelector(".art-therapy-link");
   const overlay = document.querySelector(".transition-overlay");
+  const container = document.querySelector(".container");
+
+  // Start values (tune these)
+  let tx = -22;
+  let ty = -14;
+
+  function applyVars() {
+    overlay.style.setProperty("--tx", tx + "%");
+    overlay.style.setProperty("--ty", ty + "%");
+    hud.textContent = `TUNE: --tx: ${tx}%, --ty: ${ty}%  (arrow keys, shift+click = no redirect)`;
+  }
+
+  // Small on-screen HUD
+  const hud = document.createElement("div");
+  hud.style.position = "fixed";
+  hud.style.left = "16px";
+  hud.style.bottom = "16px";
+  hud.style.padding = "10px 12px";
+  hud.style.fontSize = "12px";
+  hud.style.letterSpacing = "0.08em";
+  hud.style.background = "rgba(255,255,255,0.85)";
+  hud.style.border = "1px solid rgba(0,0,0,0.08)";
+  hud.style.borderRadius = "10px";
+  hud.style.zIndex = "9999";
+  hud.style.display = "none";
+  document.body.appendChild(hud);
+
+  // Use CSS variables in your transform
+  applyVars();
+
+  // Arrow key tuning (only when tuning is visible)
+  window.addEventListener("keydown", (e) => {
+    if (hud.style.display !== "block") return;
+
+    const step = e.altKey ? 5 : 1; // Alt = faster
+    if (e.key === "ArrowLeft")  tx -= step;
+    if (e.key === "ArrowRight") tx += step;
+    if (e.key === "ArrowUp")    ty -= step;
+    if (e.key === "ArrowDown")  ty += step;
+
+    applyVars();
+  });
 
   artLink.addEventListener("click", (e) => {
     e.preventDefault();
 
-    // Show overlay
+    const tuning = e.shiftKey; // HOLD SHIFT to tune (no redirect)
+
+    // show HUD only in tuning mode
+    hud.style.display = tuning ? "block" : "none";
+    applyVars();
+
     overlay.classList.add("active");
+    container.style.opacity = 0;
 
-    // Fade out text
-    document.querySelector(".container").style.opacity = 0;
-
-    // Navigate after animation
-    setTimeout(() => {
-      window.location.href = "SSArtTherapy.html";
-    }, 1200);
+    if (!tuning) {
+      setTimeout(() => {
+        window.location.href = "SSArtTherapy.html";
+      }, 1200);
+    }
   });
 </script>
+
 
   
 </body>
 </html>
+
 
 
 
