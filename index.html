@@ -48,11 +48,16 @@
       background-image: url("assets/SSArtTherapyBG.png");
       background-size: cover;
       background-position: center;
-      opacity: 0;
-      transition: opacity 2.2s ease;
+      opacity: 1;
+      filter: blur(6px); 
+      transition: filter 2.6s cubic-bezier(0.22, 0.61, 0.36, 1);
       z-index: 1;
       pointer-events: none;
     }
+
+    .bg-inner.active {
+  filter: blur(0px);
+}
 
     /* =========================
        ZOOM SOURCE (landing img)
@@ -86,11 +91,17 @@
        FOREGROUND CONTENT
        ========================= */
     .container {
+      filter: blur(4px);
       position: relative;
       z-index: 3;
       padding: 80px 60px;
-      transition: opacity 0.6s ease;
+      transition: filter 2.6s cubic-bezier(0.22, 0.61, 0.36, 1),
+              opacity 0.6s ease;
     }
+
+    .container.active {
+  filter: blur(0px);
+}
 
     h1 {
       margin: 0 0 40px 0;
@@ -158,8 +169,9 @@
 
       /* start zoom immediately */
       zoom.classList.add("active");
-
       innerBg.style.opacity = 1;
+      innerBg.classList.add("active");
+      container.classList.add("active");
 
       /* navigate after motion settles */
       setTimeout(() => {
@@ -170,6 +182,7 @@
 
 </body>
 </html>
+
 
 
 
