@@ -169,6 +169,46 @@ body.is-entering .second-scene {
   transition-delay: 0.5s;
 }
 
+.back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 14px;
+  color: #ffffff;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.6s linear;
+}
+
+.back {
+  pointer-events: auto;
+}
+
+body.is-entering .back {
+  opacity: 0.8;
+  transition-delay: 1s;
+}
+
+body.is-resetting .scene-image,
+body.is-resetting .second-scene {
+  transition: none !important;
+}
+
+body.is-resetting .teal-layer {
+  opacity: 0;
+}
+
+.frame {
+  transition: opacity 0.3s ease;
+}
+
+body.is-fading-in .frame {
+  opacity: 1;
+}
+
+body.is-resetting .frame {
+  opacity: 0;
+}
 
   </style>
 </head>
@@ -189,6 +229,7 @@ body.is-entering .second-scene {
 
 <div class="second-scene">
     <div class="second-scene-image"></div>
+    <div class="back">Back</div>
   
     <div class="second-scene-text">
       <div class="name">SUNIDHI SINHA</div>
@@ -199,6 +240,7 @@ body.is-entering .second-scene {
     <script>
         const title = document.getElementById("artTherapy");
         const bg = document.querySelector(".scene-image");
+        const secondScene = document.querySelector(".second-scene");
       
         title.addEventListener("mouseenter", () => {
           bg.classList.add("bg-visible");
@@ -209,10 +251,41 @@ body.is-entering .second-scene {
         });
 
         title.addEventListener("click", () => {
+             // IMPORTANT: clear inline opacity from previous run
+  secondScene.style.opacity = "";
+            
   setTimeout(() => {
+    
     document.body.classList.add("is-entering");
   }, 250);
 });
+        const back = document.querySelector(".back");
+
+        back.addEventListener("click", () => {
+  
+
+  // 1. Fast fade out second scene
+  secondScene.style.opacity = "0";
+
+  setTimeout(() => {
+    // 2. Begin gentle color + content fade
+    document.body.classList.add("is-resetting");
+
+    // 3. Remove entering state (no animation rewind)
+    document.body.classList.remove("is-entering");
+
+    // 4. Fade landing back in
+    document.body.classList.add("is-fading-in");
+
+    setTimeout(() => {
+      document.body.classList.remove("is-resetting");
+      document.body.classList.remove("is-fading-in");
+    }, 300);
+
+  }, 150);
+});
+
+
       </script>
   </body>
 </html>
